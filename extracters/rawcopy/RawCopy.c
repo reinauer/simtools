@@ -40,10 +40,10 @@ while (0 != (bytesread = fread(buf, 1, readsize, fin)))
     else
        totalbytes += bytesread;
     if (0 == (totalbytes%(1024*1024)))
-        fprintf(stderr, "%6dMB Copied...\r", totalbytes/(1024*1024));
+        fprintf(stderr, "%6zuMB Copied...\r", totalbytes/(1024*1024));
     }
 fprintf(stderr, "\n");
-fprintf(stderr, "Total Data: %6.2f MBytes (%d bytes)\n", totalbytes/(1024.0*1024.0), totalbytes);
+fprintf(stderr, "Total Data: %6.2f MBytes (%zu bytes)\n", totalbytes/(1024.0*1024.0), totalbytes);
 fclose(fin);
 fclose(fout);
  exit(0);

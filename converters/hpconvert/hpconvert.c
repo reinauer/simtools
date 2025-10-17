@@ -173,7 +173,8 @@ int main (int    argc,
     char   sig_fwd [SIGNATURE_SIZE], sig_rev [SIGNATURE_SIZE];
     char   hold, cylinder [CYLINDER_SIZE];
     bool   identified = false, reversed = false, debug = false;
-    int    i, cyl, from_cyl, to_cyl, remap;
+    size_t i;
+    int    cyl, from_cyl, to_cyl, remap;
     int    platter, cylinder_size, hole_size;
 
 

@@ -886,7 +886,7 @@ char *argv[];
             fflush (stdout);
             asm_pass (f1);
             fclose (f1);
-            printf ("%d lines\n", line_count);
+            printf ("%ld lines\n", line_count);
         }
     }
 
@@ -904,7 +904,7 @@ char *argv[];
             printf ("%s ", argv[ii]);
             fflush (stdout);
             asm_pass (f1);
-            printf ("%d lines\n", line_count);
+            printf ("%ld lines\n", line_count);
             fclose (f1);
         }
     }

@@ -53,7 +53,7 @@ if ((argc < 2) || (argv[0] == NULL)) {
 	printf ("Usage is: mtdump {-secf} file [file...]\n");
 	exit (0);  }
 
-s = argv[1];
+s = (unsigned char *)argv[1];
 if ((s != NULL) && (*s++ == '-')) {
 	++argv; --argc;
 	switch (*s) {

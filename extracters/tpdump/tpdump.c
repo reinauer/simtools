@@ -173,7 +173,7 @@ int main ( int argc, char* argv[] )
       if ( (recsiz & 1) && even ) fread ( pr, 1, 1, fi );
       recsiz2 = read_len ( fi );
       if ( recsiz2 != recsiz )
-      { printf("Unequal starting and ending record sizes: %d != %d\n",
+      { printf("Unequal starting and ending record sizes: %zu != %zu\n",
           recsiz, recsiz2);
         return(4);
       }

@@ -103,7 +103,7 @@ for ( ;; ) {
 	    for (j = 1; j < numctl[i]; j++) {
 		printf ("\t\t  %d\t%06o\n", j + 1, csr);
 		csr = (csr + modtab[i] + 1) & ~modtab[i];  }
-	    printf (" %\t\tgap\t%06o\n", csr);
+	    printf (" %%\t\tgap\t%06o\n", csr);
 	    }
 	if ((i + 1) < RANK_LNT) csr = (csr + modtab[i+1] + 1) & ~modtab[i+1];
 	}

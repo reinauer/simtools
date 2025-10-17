@@ -31,7 +31,7 @@
 #define FLPSIZ 65536
 unsigned char fzero[4] = { 0 };
 
-int dump_rec (FILE *of, int bc, char *buf)
+int dump_rec (FILE *of, int bc, unsigned char *buf)
 {
 unsigned char buc[4];
 
