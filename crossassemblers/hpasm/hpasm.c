@@ -35,11 +35,10 @@ int      rep_count=0;    /* >0 if REP statement in process */
 char     listfilename[256];
 FILE    *listfile;
 /****************************************************/
-start_listing (nam)
+void start_listing (char *nam)
 /*
 **  Initialize listing output file
 */
-char *nam;
 {
     char *ppos;
 
@@ -49,7 +48,7 @@ char *nam;
     listfile = fopen (listfilename, "w");
 }
 /****************************************************/
-finish_listing () {
+void finish_listing (void) {
 /*
 **  Finish off listing output file
 */
@@ -67,11 +66,10 @@ long     outcount;
 long     outbufsize=27;
 long     outbuf[27];
 /****************************************************/
-start_output (nam)
+void start_output (char *nam)
 /*
 **  Initialize binary output file
 */
-char *nam;
 {
     char *ppos;
 
@@ -83,7 +81,7 @@ char *nam;
     outcount = 0;
 }
 /****************************************************/
-send_output () {
+void send_output (void) {
 /*
 **  Write block to binary output file
 */
@@ -104,24 +102,22 @@ send_output () {
     outcount = 0;
 }
 /****************************************************/
-output_word (addr,word) 
+void output_word (long address, long word) 
 /*
 **  Write word to binary output file
 */
-long addr;
-long word;
 {
-    if (outcount && (outaddr + outcount) != addr) {
+    if (outcount && (outaddr + outcount) != address) {
         send_output();
     }
-    if (!outcount) outaddr = addr;
+    if (!outcount) outaddr = address;
     outbuf[outcount++] = word;
     if (outcount == outbufsize) {
         send_output();
     }
 }
 /****************************************************/
-finish_output () {
+void finish_output (void) {
 /*
 **  Finish current output block, write trailing leader,
 **  and close output file
@@ -133,8 +129,7 @@ finish_output () {
     printf ("Output is in %s\n", outfilename);
 }
 /****************************************************/
-emit (code)
-long code;
+void emit (long code)
 {
     fprintf (listfile, "  %05lo %06lo  ", addr, code);
     if (!print_flag) {
@@ -147,8 +142,7 @@ long code;
     addr++;
 }
 /****************************************************/
-err (text)
-char *text;
+void err (char *text)
 {
     if (!print_flag) {
         fprintf (listfile, "  %12s  %s\n", " ", line);
@@ -221,7 +215,7 @@ long *value;
     *value=0;
 }
 /****************************************************/
-show_labels () 
+void show_labels (void) 
 {
     long i;
     for (i=0; i<nbsyms; i++) {
@@ -279,9 +273,7 @@ int double_to_hp (num, a, b)
     return (0);
 }
 /****************************************************/
-parse_digits (base, out) 
-int base;
-long *out;
+int parse_digits (int base, long *out) 
 {
     long dig, val;
     val = 0;
@@ -293,8 +285,7 @@ long *out;
     *out = val;
 }
 /****************************************************/
-parse_const (out)
-long *out;
+int parse_const (long *out)
 {
     long save, val;
     save = lp;
@@ -308,8 +299,7 @@ long *out;
     *out = val;
 }
 /****************************************************/
-parse_sym (out)
-long *out;
+int parse_sym (long *out)
 {
     char  sym[MXLABEL+1];
     int   count,done;

@@ -148,7 +148,7 @@ void *getdata (firqb *f, long address)
 	return (iobuf + (address % BLKSIZE));
 }
 
-void cleanup ()
+void cleanup (void)
 {
 	rumountrw ();
 	if (ovr != NULL) free (ovr);

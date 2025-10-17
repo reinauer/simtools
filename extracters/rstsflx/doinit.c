@@ -19,7 +19,7 @@
 #define UFDCLU	16
 #define DEC166COUNT	10		/* number of bad block tables */
 
-int getclusize ()
+int getclusize (void)
 {
 	int     newclu;
 	char    *p;

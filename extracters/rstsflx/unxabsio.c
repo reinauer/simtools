@@ -86,7 +86,7 @@ void absseek (long block)
 
 /* This routine is called to do any needed "close" actions for absolute I/O */
 
-void absclose ()
+void absclose (void)
 {
 	rabort(INTERNAL);		/* should never get here */
 }

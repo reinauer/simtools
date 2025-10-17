@@ -156,7 +156,7 @@ long adjsize (long tsize)
 	return tsize;
 }
 
-void setrname ()
+void setrname (void)
 {
 	long	t1;
 	int	t2;
@@ -288,7 +288,7 @@ void rwrite (long block, long size, void *buffer)
 	nextblk = block + size / BLKSIZE;
 }
 
-void rclose ()
+void rclose (void)
 {
 	if (absflag)	absclose ();
 	else		fclose (rstsfile);

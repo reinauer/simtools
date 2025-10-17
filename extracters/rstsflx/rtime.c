@@ -55,7 +55,7 @@ char *cvttime (word time, char *buf)
 	return (buf + RTIMELEN - 1);		/* point to terminator */
 }
 
-word curdate ()					/* current date in rsts form */
+word curdate (void)					/* current date in rsts form */
 {
 	struct tm	*tmb;
 	time_t		now;
@@ -65,7 +65,7 @@ word curdate ()					/* current date in rsts form */
 	return ((tmb->tm_year - 70) * 1000 + tmb->tm_yday + 1);
 }
 
-word curtime ()					/* current time in rsts form */
+word curtime (void)					/* current time in rsts form */
 {
 	struct tm	*tmb;
 	time_t		now;

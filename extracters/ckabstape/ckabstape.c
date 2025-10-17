@@ -35,7 +35,7 @@ void printb(unsigned char c)
  *
  * bits 6,7 packed into high part of int so we can look at them
  */
-unsigned int readframe()
+unsigned int readframe(void)
 {
 	unsigned int i;
 	unsigned char c;
