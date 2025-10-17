@@ -248,7 +248,15 @@ int main (int    argc,
 
 /* Generate a temporary filename for the converted image. */
 
-    name_out = tmpnam (NULL);
+    char temp_template[] = "/tmp/hpconvert_XXXXXX";
+    int temp_fd = mkstemp(temp_template);
+    if (temp_fd == -1) {
+        puts ("Error: cannot generate a temporary filename.");
+        fclose (fin);
+        return 1;
+    }
+    close(temp_fd);
+    name_out = temp_template;
 
     if (name_out == NULL) {
         puts ("Error: cannot generate a temporary filename.");
