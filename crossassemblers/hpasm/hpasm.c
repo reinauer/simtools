@@ -44,7 +44,7 @@ char *nam;
     char *ppos;
 
     strncpy (listfilename, nam, 250);
-    if (ppos = strrchr (listfilename, '.')) strcpy (ppos, ".lst");
+    if ((ppos = strrchr (listfilename, '.'))) strcpy (ppos, ".lst");
         else strcat (listfilename, ".lst");
     listfile = fopen (listfilename, "w");
 }
@@ -76,7 +76,7 @@ char *nam;
     char *ppos;
 
     strncpy (outfilename, nam, 250);
-    if (ppos = strrchr (outfilename, '.')) strcpy (ppos, ".bin");
+    if ((ppos = strrchr (outfilename, '.'))) strcpy (ppos, ".bin");
         else strcat (outfilename, ".bin");
     outfile = fopen (outfilename, "wb");
     outaddr = 0;
