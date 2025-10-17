@@ -11,6 +11,7 @@
 
 void docomp (int argc, char **argv)		/* zero unused clusters */
 {
+	(void)argc; (void)argv;  /* unused parameters */
 	byte	*s;
 	int	bit, szb;
 	long	first, size, iosize;

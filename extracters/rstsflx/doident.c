@@ -10,6 +10,7 @@
 
 void doident (int argc, char **argv)		/* show pack id data */
 {
+	(void)argc; (void)argv;  /* unused parameters */
 	packlabel	*p;
 	char		rdate[DATELEN];
 	char		rtime[RTIMELEN];

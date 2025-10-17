@@ -57,6 +57,8 @@ char *namtab[RANK_LNT] = {
 
 int main (int argc, char *argv[])
 {
+(void)argc; (void)argv;
+
 for ( ;; ) {
     for (i = 0; i < RANK_LNT; i++) numctl[i] = 0;
     printf ("Enter configuration data\n");

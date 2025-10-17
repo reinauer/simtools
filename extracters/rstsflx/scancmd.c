@@ -219,6 +219,7 @@ void dodisk (int argc, char **argv)
 
 void doexit (int argc, char **argv)
 {
+	(void)argc; (void)argv;  /* unused parameters */
 	int	i;
 	
 #ifndef __APPLE__
@@ -496,6 +497,7 @@ void initialize_readline (void)
  */
 char ** flx_completion (char *text, int start, int end)
 {
+	(void)end;  /* unused parameter */
 	char **matches;
      
 	matches = NULL;

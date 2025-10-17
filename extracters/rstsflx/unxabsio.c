@@ -81,6 +81,7 @@ int absopen (const char *rname, const char *mode)
  
 void absseek (long block)
 {
+	(void)block;  /* unused parameter */
 	rabort(INTERNAL);		/* should never get here */
 }
 
@@ -99,6 +100,7 @@ void absclose (void)
  
 long absread (long sec, long count, void *buffer)
 {
+	(void)sec; (void)count; (void)buffer;  /* unused parameters */
 	return (0);			/* should never get here */
 }
 
@@ -106,5 +108,6 @@ long absread (long sec, long count, void *buffer)
 
 long abswrite (long sec, long count, void *buffer)
 {
+	(void)sec; (void)count; (void)buffer;  /* unused parameters */
 	return (0);			/* should never get here */
 }

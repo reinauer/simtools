@@ -10,6 +10,7 @@
 
 void doalloc (int argc, char **argv)		/* show allocated clusters */
 {
+	(void)argc; (void)argv;  /* unused parameters */
 	byte	*s;
 	int	bit, szb;
 	long	first, used, unused, biggest, size;
