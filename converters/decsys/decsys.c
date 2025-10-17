@@ -31,7 +31,7 @@
 
 int main (int argc, char *argv[])
 {
-int i, j, k, word;
+int i, k, word;
 char *ppos, oname[256];
 int fill[256] = { 0 };
 FILE *ifile, *ofile;
@@ -55,7 +55,7 @@ for (i = 1; i < argc; i++) {
 
 	printf ("Processing file %s\n", argv[i]);
 	fwrite (fill, sizeof (int), 256, ofile);
-	for (j = 0;; j++) {
+	for (;;) {
 	    k = fscanf (ifile, "%d", &word);
 	    if (k == EOF) break;
 //	    printf ("%06o\n", word);

@@ -33,7 +33,7 @@
 int main (int argc, char *argv[])
 {
 int i, c, ffc;
-char *ppos, oline[256], oname[256];
+char *ppos, oname[256];
 FILE *ifile, *ofile;
 
 if ((argc < 2) || (argv[0] == NULL)) {

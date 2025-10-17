@@ -83,7 +83,6 @@ void doabort(int status, const char *srcfile, int srcline)
 
 int main (int argc, char **argv)
 {
-	int	cmdlen;
 	char	**cmdargv = NULL;	/* for scanning command line */
 	int	cmdargc;
 	char	*word;

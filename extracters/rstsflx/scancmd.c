@@ -220,7 +220,6 @@ void dodisk (int argc, char **argv)
 void doexit (int argc, char **argv)
 {
 	(void)argc; (void)argv;  /* unused parameters */
-	int	i;
 	
 #ifndef __APPLE__
 	i = append_history (newhistitems, histfile);
