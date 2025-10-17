@@ -184,37 +184,6 @@ unsigned dircache(struct VCB *vcb,char *dirnam,int dirlen,struct fiddef *dirid)
         the device name and any previous directory name entries.)  */
 
 
-#define STATUS_INIT 1
-#define STATUS_TMPDIR  2
-#define STATUS_WILDCARD 4
-
-struct WCCDIR {
-    struct WCCDIR *wcd_next;
-    struct WCCDIR *wcd_prev;
-    int wcd_status;
-    int wcd_wcc;
-    int wcd_prelen;
-    unsigned short wcd_reslen;
-    struct dsc$descriptor wcd_serdsc;
-    struct fiddef wcd_dirid;
-    char wcd_sernam[1];         /* Must be last in structure */
-};                              /* Directory context */
-
-
-#define STATUS_RECURSE 8
-#define STATUS_TMPWCC  16
-#define MAX_FILELEN 1024
-
-struct WCCFILE {
-    struct FAB *wcf_fab;
-    struct VCB *wcf_vcb;
-    struct FCB *wcf_fcb;
-    int wcf_status;
-    struct fiddef wcf_fid;
-    char wcf_result[MAX_FILELEN];
-    struct WCCDIR wcf_wcd;      /* Must be last..... (dynamic length). */
-};                              /* File context */
-
 
 /* Function to remove WCCFILE and WCCDIR structures when not required */
 
@@ -393,7 +362,7 @@ unsigned do_search(struct FAB *fab,struct WCCFILE *wccfile)
         }
     }
     cleanup_wcf(wccfile);
-    if (nam != NULL) nam->nam$l_wcc = 0;
+    if (nam != NULL) nam->nam$l_wcc = NULL;
     fab->fab$w_ifi = 0;         /* must dealloc memory blocks! */
     return sts;
 }
@@ -406,7 +375,7 @@ unsigned sys_search(struct FAB *fab)
     struct NAM *nam = fab->fab$l_nam;
     struct WCCFILE *wccfile;
     if (nam == NULL) return RMS$_NAM;
-    wccfile = (struct WCCFILE *) nam->nam$l_wcc;
+    wccfile = nam->nam$l_wcc;
     if (wccfile == NULL) return RMS$_WCC;
     return do_search(fab,wccfile);
 }
@@ -430,9 +399,9 @@ unsigned do_parse(struct FAB *fab,struct WCCFILE **wccret)
     int sts;
     int fna_size[5] = {0, 0, 0, 0, 0},dna_size[5] = {0, 0, 0, 0, 0};
     if (fab->fab$w_ifi != 0) return RMS$_IFI;
-        if (nam != NULL) if (nam->nam$l_wcc == 0) {
-            cleanup_wcf((struct WCCFILE *) nam->nam$l_wcc);
-            nam->nam$l_wcc = 0;
+        if (nam != NULL) if (nam->nam$l_wcc == NULL) {
+            cleanup_wcf(nam->nam$l_wcc);
+            nam->nam$l_wcc = NULL;
         }
     /* Break up file specifications... */
 
@@ -635,7 +604,7 @@ unsigned do_parse(struct FAB *fab,struct WCCFILE **wccret)
 #endif
     }
     if (wccret != NULL) *wccret = wccfile;
-    if (nam != NULL) nam->nam$l_wcc = (int) wccfile;
+    if (nam != NULL) nam->nam$l_wcc = wccfile;
     return SS$_NORMAL;
 }
 
@@ -943,7 +912,7 @@ unsigned sys_close(struct FAB *fab)
         ifi_table[ifi_no]->wcf_fcb = NULL;
         if (ifi_table[ifi_no]->wcf_status & STATUS_TMPWCC) {
             cleanup_wcf(ifi_table[ifi_no]);
-            if (fab->fab$l_nam != NULL) fab->fab$l_nam->nam$l_wcc = 0;
+            if (fab->fab$l_nam != NULL) fab->fab$l_nam->nam$l_wcc = NULL;
         }
         fab->fab$w_ifi = 0;
         ifi_table[ifi_no] = NULL;
@@ -965,7 +934,7 @@ unsigned sys_open(struct FAB *fab)
     while (ifi_table[ifi_no] != NULL && ifi_no < IFI_MAX) ifi_no++;
     if (ifi_no >= IFI_MAX) return RMS$_IFI;
     if (nam != NULL) {
-        wccfile = (struct WCCFILE *) nam->nam$l_wcc;
+        wccfile = nam->nam$l_wcc;
     }
     if (wccfile == NULL) {
         sts = do_parse(fab,&wccfile);
@@ -989,7 +958,7 @@ unsigned sys_open(struct FAB *fab)
     }
     if (wcc_flag && ((sts & 1) == 0)) {
         cleanup_wcf(wccfile);
-        if (nam != NULL) nam->nam$l_wcc = 0;
+        if (nam != NULL) nam->nam$l_wcc = NULL;
     }
     return sts;
 }
@@ -1008,7 +977,7 @@ unsigned sys_erase(struct FAB *fab)
     while (ifi_table[ifi_no] != NULL && ifi_no < IFI_MAX) ifi_no++;
     if (ifi_no >= IFI_MAX) return RMS$_IFI;
     if (nam != NULL) {
-        wccfile = (struct WCCFILE *) fab->fab$l_nam->nam$l_wcc;
+        wccfile = fab->fab$l_nam->nam$l_wcc;
     }
     if (wccfile == NULL) {
         sts = do_parse(fab,&wccfile);
@@ -1043,7 +1012,7 @@ unsigned sys_erase(struct FAB *fab)
     }
     if (wcc_flag) {
         cleanup_wcf(wccfile);
-        if (nam != NULL) nam->nam$l_wcc = 0;
+        if (nam != NULL) nam->nam$l_wcc = NULL;
     }
     return sts;
 }

@@ -32,13 +32,15 @@ struct UIC {
     u_word u_mem;
 };
 
-
+#ifndef FIDDEF_DEFINED
+#define FIDDEF_DEFINED
 struct fiddef {
     u_word fid$w_num;
     u_word fid$w_seq;
     u_byte fid$b_rvn;
     u_byte fid$b_nmx;
 };
+#endif
 
 
 struct RECATTR {

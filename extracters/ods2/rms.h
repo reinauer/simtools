@@ -21,6 +21,50 @@
 
 #include "vmstime.h"
 
+/* Define struct fiddef here to avoid circular includes */
+#ifndef FIDDEF_DEFINED
+#define FIDDEF_DEFINED
+struct fiddef {
+    unsigned short fid$w_num;
+    unsigned short fid$w_seq;
+    unsigned char fid$b_rvn;
+    unsigned char fid$b_nmx;
+};
+#endif
+
+/* Forward declaration for WCCFILE */
+struct WCCFILE;
+
+#define STATUS_INIT 1
+#define STATUS_TMPDIR  2
+#define STATUS_WILDCARD 4
+
+struct WCCDIR {
+    struct WCCDIR *wcd_next;
+    struct WCCDIR *wcd_prev;
+    int wcd_status;
+    int wcd_wcc;
+    int wcd_prelen;
+    unsigned short wcd_reslen;
+    struct dsc$descriptor wcd_serdsc;
+    struct fiddef wcd_dirid;
+    char wcd_sernam[1];
+};
+
+#define STATUS_RECURSE 8
+#define STATUS_TMPWCC  16
+#define MAX_FILELEN 1024
+
+struct WCCFILE {
+    struct FAB *wcf_fab;
+    struct VCB *wcf_vcb;
+    struct FCB *wcf_fcb;
+    int wcf_status;
+    struct fiddef wcf_fid;
+    char wcf_result[MAX_FILELEN];
+    struct WCCDIR wcf_wcd;
+};
+
 #define RMS$_RTB 98728
 #define RMS$_EOF 98938
 #define RMS$_FNF 98962
@@ -127,7 +171,7 @@ struct NAM {
     char *nam$l_type;
     int nam$b_ver;
     char *nam$l_ver;
-    int nam$l_wcc;
+    struct WCCFILE *nam$l_wcc;
     int nam$b_nop;
     int nam$l_fnb;
 };
