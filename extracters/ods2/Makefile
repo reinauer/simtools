@@ -1,12 +1,12 @@
 # all of these can be over-ridden on the "make" command line if they don't suit your environment.
 TOOL=ods2
-CFLAGS=-O2 -Wall -Wshadow -Wextra -pedantic -Woverflow -Wstrict-overflow
+CFLAGS=-O2 -Wall -Wshadow -Wextra -pedantic -Woverflow -Wstrict-overflow -fdollars-in-identifiers -Wno-int-to-pointer-cast -Wno-int-conversion -Wno-int-conversion -Wno-int-conversion -Wno-int-conversion
 BIN=/usr/local/bin
 INSTALL=install
 CC=gcc
 
-$(TOOL): $(TOOL).c access.c cache.c device.c direct.c phynt.c rms.c vmstime.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $(TOOL) $(TOOL).c access.c cache.c device.c direct.c phynt.c rms.c vmstime.c $(LDLIBS)
+$(TOOL): $(TOOL).c access.c cache.c device.c direct.c phyunix.c rms.c vmstime.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $(TOOL) $(TOOL).c access.c cache.c device.c direct.c phyunix.c rms.c vmstime.c $(LDLIBS)
 
 .PHONY: clean install uninstall
 

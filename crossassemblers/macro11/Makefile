@@ -3,7 +3,7 @@
 # Makefile for macro11 and dumpobj
 #
 
-WARNS ?= -Wall -Wshadow -Wextra -pedantic -Woverflow -Wstrict-overflow
+WARNS ?= -Wall -Wshadow -Wextra -pedantic -Woverflow -Wstrict-overflow -Wno-unused-but-set-variable -Wno-strict-prototypes
 CFLAGS ?= -O -ggdb -std=gnu99 $(WARNS)
 
 MACRO11_SRCS = macro11.c \
