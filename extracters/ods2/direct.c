@@ -128,12 +128,15 @@ int namematch(char *spec,int speclen,char *entry,int entrylen)
         if (entrylen < count) count = entrylen;
         do {
             register char sch = *spc,ech = *ent;
-                if (sch != ech) if (toupper(sch) != toupper(ech))
-                    if (sch == '%') {
-                        percent = 1;
-                    } else {
-                        break;
+                if (sch != ech) {
+                    if (toupper(sch) != toupper(ech)) {
+                        if (sch == '%') {
+                            percent = 1;
+                        } else {
+                            break;
+                        }
                     }
+                }
             spc++;
             ent++;
         } while (--count > 0);
