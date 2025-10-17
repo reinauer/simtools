@@ -29,6 +29,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #define RANK_LNT	34	
 
@@ -64,7 +65,9 @@ for ( ;; ) {
     printf ("Enter configuration data\n");
     for ( ;; ) {
 	printf ("Name:\t");
-	if (gets (inp) == NULL) return 0;
+	if (fgets (inp, sizeof(inp), stdin) == NULL) return 0;
+	/* Remove trailing newline if present */
+	if (inp[strlen(inp)-1] == '\n') inp[strlen(inp)-1] = '\0';
 	if (*inp == 0) break;
 	for (cp = inp; *cp != 0; cp++) *cp = toupper (*cp);
 	for (rank = 0; rank < RANK_LNT; rank++) {
@@ -77,7 +80,9 @@ for ( ;; ) {
 	    printf ("\n");
 	    continue;  }
 	printf ("Number:\t");
-	gets (inp);
+	if (fgets (inp, sizeof(inp), stdin) == NULL) continue;
+	/* Remove trailing newline if present */
+	if (inp[strlen(inp)-1] == '\n') inp[strlen(inp)-1] = '\0';
 	errno = 0;
 	num = strtoul (inp, &ocp, 10);
 	if (errno || (inp == ocp)) {
